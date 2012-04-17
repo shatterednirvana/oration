@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: Object</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./bin/oration.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="bin/oration">bin/oration</a></li>
+          
+            <li><a href="./bin/oration_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="bin/oration.rb">bin/oration.rb</a></li>
+          
+            <li><a href="./lib/generator_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/generator.rb">lib/generator.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link"></p>
+        
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-i-validate_arguments">#validate_arguments</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./Generator.html">Generator</a></li>
+        
+          <li><a href="./Object.html">Object</a></li>
+        
+          <li><a href="./OrationFlags.html">OrationFlags</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Object</h1>
+
+    <div id="description">
+      
+    </div>
+
+    <!-- Constants -->
+    
+    <div id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt><a name="SUPPORTED_LANGUAGES">SUPPORTED_LANGUAGES</a></dt>
+        
+        <dd class="description"><p>A list of languages that we can build Cicero-ready applications for. Right
+now it’s just Python and Go. TODO(cgb): Add Java support</p></dd>
+        
+      
+      </dl>
+    </div>
+    
+
+    <!-- Attributes -->
+    
+
+    <!-- Methods -->
+    
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="validate_arguments-method" class="method-detail ">
+        <a name="method-i-validate_arguments"></a>
+
+        
+        <div class="method-heading">
+          <span class="method-name">validate_arguments</span><span
+            class="method-args">(main_file, function_name, output_dir, app_id, file=File)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method takes in the arguments given to oration and validates them.
+Right now it’s just three arguments: the name of the main code file to
+exec, the name of the function in that file that should be exec’d, and
+where we should write their App Engine app. We validate that the file
+specified exists and has a function with that name, and that the directory
+they specified doesn’t exist (so that we don’t overwrite anything
+already there).</p>
+          
+
+          
+          <div class="method-source-code"
+            id="validate_arguments-source">
+<pre>
+<span class="ruby-comment"># File bin/oration, line 38</span>
+def validate_arguments(main_file, function_name, output_dir, app_id, file=<span class="ruby-constant">File</span>)
+  if !file.exists?(main_file)
+    abort(&quot;#{main_file} didn't exist.&quot;)
+  end
+
+  contents = file.open(main_file) { |f| f.read }
+
+  <span class="ruby-comment"># Right now we support Python and Go code, so match against method</span>
+  <span class="ruby-comment"># signatures in those languages.</span>
+  python_sig = /def #{function_name}\(/
+  go_method_sig = /func #{function_name}\(/
+  all_languages_method_sig_regex = /#{python_sig}|#{go_method_sig}/
+
+  if !contents.match(all_languages_method_sig_regex)
+    abort(&quot;We couldn't find the function #{function_name} in the file &quot; +
+      &quot;#{main_file}&quot;)
+  end
+
+  if file.exists?(output_dir)
+    abort(&quot;The output location specified, #{output_dir}, already exists.&quot; +
+      <span class="ruby-string">&quot; Please remove it and try again.&quot;</span>)
+  end
+end</pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+

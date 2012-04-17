@@ -1,0 +1,1 @@
+rdoc bin lib
