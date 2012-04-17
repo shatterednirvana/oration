@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    oration (0.0.4)
+      optiflag
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    optiflag (0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  oration!
