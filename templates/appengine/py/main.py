@@ -1,4 +1,9 @@
 ##### BEGIN CICERO-BOILERPLATE CODE  #####
+# Sets up a standard set of routes according to the Cicero API.
+#
+# TODO(cgb): The user may have their own imports in the code - consider
+# automatically placing them in as well.
+
 try:
   import simplejson as json
 except ImportError:
@@ -18,8 +23,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
 
-import CICERO_PACKAGE_NAME
-
+import {{ package_name }}
 
 class TaskInfo(db.Model):
   state = db.StringProperty()
@@ -47,7 +51,7 @@ class TaskRoute(webapp.RequestHandler):
     self.response.out.write(str_result)
 
   def put(self):
-    allowed_routes = ['CICERO_FUNCTION_NAME']
+    allowed_routes = ['{{ function_name }}']
     function = self.request.get('f')
     input_source = self.request.get('input1')
     json_data = {'f':function, 'input1':input_source}
@@ -135,7 +139,7 @@ class ComputeWorker(webapp.RequestHandler):
 
     logging.debug("done adding task info, running task")
     output_text = Text(key_name = output_dest)
-    output_text.content = str(CICERO_PACKAGE_AND_FUNCTION_NAME())
+    output_text.content = str({{ package_name }}.{{ function_name }}())
     output_text.put()
 
     logging.debug("done running task - updating task metadata")
@@ -154,15 +158,13 @@ def main():
   logging.getLogger().setLevel(logging.DEBUG)
   application = webapp.WSGIApplication([('/task', TaskRoute),
                                         ('/data', DataRoute),
-                                        ('/CICERO_FUNCTION_NAME', ComputeWorker),
+                                        ('/{{ function_name }}', ComputeWorker),
                                         ('/', IndexPage),
                                         ],
                                         debug=True)
   util.run_wsgi_app(application)
 
-
 if __name__ == '__main__':
   main()
-
 
 ##### END CICERO-BOILERPLATE CODE  #####

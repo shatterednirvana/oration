@@ -2,15 +2,18 @@ PATH
   remote: .
   specs:
     oration (0.0.4)
+      mustache
       optiflag
 
 GEM
   remote: http://rubygems.org/
   specs:
+    mustache (0.99.4)
     optiflag (0.7)
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   oration!

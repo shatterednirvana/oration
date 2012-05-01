@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-import "CICERO_PKG_NAME"
+import "{{ package_name }}"
 
 type TaskInfo struct {
 	State     string
@@ -183,7 +183,7 @@ func computeWorker(w http.ResponseWriter, r *http.Request) {
 	outputTextKeyName := outputDest
 	outputTextKey := datastore.NewKey(c, "Text", outputTextKeyName, 0, nil)
 	outputText := Text{
-		Content: CICERO_PACKAGE_AND_FUNCTION_NAME(),
+		Content: {{ package_name }}.{{ function_name }}(),
 	}
 	datastore.Put(c, outputTextKey, &outputText)
 

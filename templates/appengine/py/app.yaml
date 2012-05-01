@@ -1,0 +1,11 @@
+# Add support for jquery and bootstrap? If so, also be sure to write those
+# files in the given directory.
+
+application: {{ app_id }}
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: .*
+  script: main.py
