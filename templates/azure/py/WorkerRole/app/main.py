@@ -16,6 +16,10 @@ import StringIO
 import wsgiref.handlers
 import base64
 
+# Enable HTTP debugging http://stackoverflow.com/q/5022945
+import httplib
+httplib.HTTPConnection.debuglevel = 1
+
 # NOTE: We use blob storage instead of db because `winazurestorage` does not
 # support editing Table Storage, only Blob Storage.
 import winazurestorage as azure
@@ -24,16 +28,21 @@ import webapp2
 import {{ package_name }}
 
 blob = None
-if 'AZURE_STORAGE_ACCOUNT' in os.environ and 'AZURE_STORAGE_SECRET_KEY' in os.environ:
+if 'AZURE_STORAGE_ACCOUNT' in os.environ and 'AZURE_STORAGE_SECRET_KEY' in os.environ \
+    and os.environ['AZURE_STORAGE_ACCOUNT'] and os.environ['AZURE_STORAGE_SECRET_KEY']:
   blob = azure.BlobStorage(azure.CLOUD_BLOB_HOST, os.environ['AZURE_STORAGE_ACCOUNT'], os.environ['AZURE_STORAGE_SECRET_KEY'])
 else:
   blob = azure.BlobStorage() # use local dev storage
 
 def get_container(namespace):
   name = "cicero-{{ app_id }}" + namespace
+
+  # Check that it doesn't exist already.
+  for container in blob.list_containers():
+    if container[0] == name: return name
+
+  # Otherwise, create it.
   code = blob.create_container(name)
-  if code != 200:
-    raise Exception("error creating container " + name + ": " + str(code))
   return name
 
 class TaskRoute(webapp2.RequestHandler):
