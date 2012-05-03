@@ -6,10 +6,8 @@ class Hair
     # context and put the results in the directory `target`.
     def render(source, target, ctx = {})
       target = File.expand_path(target)
-      p source, target, ctx
 
       Dir.chdir(source) do
-        p Dir['**/*']
         Dir['**/*'].each do |name|
           next if File.directory?(name)
           rendered = Mustache.render(File.read(name), ctx)
