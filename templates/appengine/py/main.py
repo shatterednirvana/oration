@@ -17,11 +17,8 @@ import wsgiref.handlers
 import base64
 
 from google.appengine.api import taskqueue
-
 from google.appengine.ext import db
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp import util
+import webapp2
 
 import {{ package_name }}
 
@@ -35,7 +32,7 @@ class Text(db.Model):
   content = db.TextProperty()
 
 
-class TaskRoute(webapp.RequestHandler):
+class TaskRoute(webapp2.RequestHandler):
   def get(self):
     key_name = self.request.get('task_id')
     logging.debug("looking up task info for task id " + key_name)
@@ -87,7 +84,7 @@ class TaskRoute(webapp.RequestHandler):
     self.response.out.write(result)
 
 
-class DataRoute(webapp.RequestHandler):
+class DataRoute(webapp2.RequestHandler):
   def get(self):
     key_name = self.request.get('location')
     output = Text.get_by_key_name(key_name)
@@ -122,7 +119,7 @@ class DataRoute(webapp.RequestHandler):
     self.response.out.write(result)
 
 
-class ComputeWorker(webapp.RequestHandler):
+class ComputeWorker(webapp2.RequestHandler):
   def post(self):
     logging.debug("starting a new task")
     raw_data = self.request.get('data')
@@ -149,20 +146,19 @@ class ComputeWorker(webapp.RequestHandler):
     task_info.put()
 
 
-class IndexPage(webapp.RequestHandler):
+class IndexPage(webapp2.RequestHandler):
   def get(self):
     # TODO(cgb): write something nicer about oration here!
     self.response.out.write("hello!")
 
+logging.getLogger().setLevel(logging.DEBUG)
+app = webapp2.WSGIApplication([('/task', TaskRoute),
+                              ('/data', DataRoute),
+                              ('/{{ function_name }}', ComputeWorker),
+                              ('/', IndexPage),
+                              ], debug=True)
 def main():
-  logging.getLogger().setLevel(logging.DEBUG)
-  application = webapp.WSGIApplication([('/task', TaskRoute),
-                                        ('/data', DataRoute),
-                                        ('/{{ function_name }}', ComputeWorker),
-                                        ('/', IndexPage),
-                                        ],
-                                        debug=True)
-  util.run_wsgi_app(application)
+  app.run()
 
 if __name__ == '__main__':
   main()
