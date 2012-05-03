@@ -4,5 +4,5 @@ if "%ServiceHostingSDKInstallPath%" == "" (
     GOTO :eof
 )
 cspack ServiceDefinition.csdef /copyOnly /out:"{{ app_id }}.csx"
-csrun PythonRole.csx ServiceConfiguration.Local.cscfg
+csrun {{ app_id }}.csx ServiceConfiguration.Local.cscfg
 if "%ERRORLEVEL%"=="0" ( echo Browse to the port you see above to view the app. To stop the compute emulator, use "csrun /devfabric:shutdown" )
