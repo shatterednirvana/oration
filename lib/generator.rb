@@ -34,7 +34,7 @@ class Generator
   def package_name
     case language
     when 'py', 'go'
-      File.basename(file_name, language)
+      File.basename(file_name, '.' + language)
     end
   end
 
