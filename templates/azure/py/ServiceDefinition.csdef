@@ -31,12 +31,8 @@
                 <Variable name="PYTHON_PATH">
                     <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='python']/@path" />
                 </Variable>
-                <Variable name="AZURE_STORAGE_ACCOUNT">
-                  <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/ConfigurationSettings/ConfigurationSetting[@name='AZURE_STORAGE_ACCOUNT']/@value" />
-                </Variable>
-                <Variable name="AZURE_STORAGE_SECRET_KEY">
-                  <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/ConfigurationSettings/ConfigurationSetting[@name='AZURE_STORAGE_SECRET_KEY']/@value" />
-                </Variable>
+                <Variable name="AZURE_STORAGE_ACCOUNT" value="" />
+                <Variable name="AZURE_STORAGE_SECRET_KEY" value="" />
             </Environment>
             <EntryPoint>
                 <ProgramEntryPoint commandLine="run.cmd" setReadyOnProcessStart="true" />

@@ -2,11 +2,10 @@
 
 ## Configuration
 
-Before deploying to Azure, you should insert your [Windows Azure Storage
-credentials][windows azure portal] into `ServiceConfiguration.Cloud.cscfg`. Look for the following lines:
+Before deploying to Azure, you should insert your [Windows Azure Storage credentials][windows azure portal] into `ServiceDefinition.csdef`. Look for the following lines:
 
-    <Setting name="AZURE_STORAGE_ACCOUNT" value="" />
-    <Setting name="AZURE_STORAGE_SECRET_KEY" value="" />
+    <Variable name="AZURE_STORAGE_ACCOUNT" value="" />
+    <Variable name="AZURE_STORAGE_SECRET_KEY" value="" />
 
 ## Local testing
 
