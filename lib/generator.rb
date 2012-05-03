@@ -16,12 +16,13 @@ class Generator
     %w{py go}
   end
 
-  attr_reader :file_name, :function_name, :output_dir, :app_id
-  def initialize(file_name, function_name, output_dir, app_id)
+  attr_reader :file_name, :function_name, :output_dir, :app_id, :cloud
+  def initialize(file_name, function_name, output_dir, app_id, cloud)
     @file_name = file_name
     @function_name = function_name
     @output_dir = output_dir
     @app_id = app_id
+    @cloud = cloud
   end
 
   # The language file suffix (e.g. "py") in which `file_name` is written.
@@ -57,7 +58,7 @@ class Generator
     # The templates are able to call instance methods of `self`. That's how we
     # pass information to them.
     Hair.render(File.join(File.dirname(__FILE__), "..", "templates", 
-                          "appengine", language), output_dir, self)
+                          cloud, language), output_dir, self)
 
     # Hair doesn't support files with dynamic paths, so we move such files
     # manually here.
@@ -70,8 +71,17 @@ class Generator
     end
 
     # Copy over any files in the directory the user has given us over to the
-    # new directory we are making for their App Engine app.
-    FileUtils.cp_r(File.dirname(file_name) + "/.", output_dir)
+    # new directory we are making for their App Engine / Azure app.
+    case cloud
+    when 'azure'
+      copy_user_files_to(File.join(output_dir, 'WorkerRole', 'app'))
+    else
+      copy_user_files_to(output_dir)
+    end
+  end
+
+  def copy_user_files_to(target)
+    FileUtils.cp_r(File.dirname(file_name) + "/.", target)
   end
   
 end

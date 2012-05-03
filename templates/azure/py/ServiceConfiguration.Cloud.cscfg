@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ServiceConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" serviceName="{{ app_id }}" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="2" osVersion="*">
+  <Role name="WorkerRole">
+    <ConfigurationSettings>
+      <Setting name="AZURE_STORAGE_ACCOUNT" value="" />
+      <Setting name="AZURE_STORAGE_SECRET_KEY" value="" />
+    </ConfigurationSettings>
+    <Instances count="2" />
+  </Role>
+</ServiceConfiguration>
