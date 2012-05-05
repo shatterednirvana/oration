@@ -141,7 +141,7 @@ def compute(data):
   logging.debug("adding info about new task, with id " + task_id)
   task_info = {'key_name': task_id}
   task_info['state'] = "started"
-  task_info['start_time'] = datetime.datetime.now()
+  task_info['start_time'] = datetime.datetime.now().isoformat()
   blob.put_blob(get_container('tasks'), task_id, json.dumps(task_info))
 
   logging.debug("done adding task info, running task")
@@ -152,7 +152,7 @@ def compute(data):
   logging.debug("done running task - updating task metadata")
   task_info = json.loads(blob.get_blob(get_container('tasks'), task_id))
   task_info['state'] = "finished"
-  task_info['end_time'] = datetime.datetime.now()
+  task_info['end_time'] = datetime.datetime.now().isoformat()
   blob.put_blob(get_container('tasks'), task_id, json.dumps(task_info))
 
 class ComputeWorker(webapp2.RequestHandler):
