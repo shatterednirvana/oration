@@ -28,9 +28,9 @@ import webapp2
 import {{ package_name }}
 
 blob = None
-if 'AZURE_STORAGE_ACCOUNT' in os.environ and 'AZURE_STORAGE_SECRET_KEY' in os.environ \
-    and os.environ['AZURE_STORAGE_ACCOUNT'] and os.environ['AZURE_STORAGE_SECRET_KEY']:
-  blob = azure.BlobStorage(azure.CLOUD_BLOB_HOST, os.environ['AZURE_STORAGE_ACCOUNT'], os.environ['AZURE_STORAGE_SECRET_KEY'])
+if 'AZURE_STORAGE_ACCOUNT_NAME' in os.environ and 'AZURE_STORAGE_ACCESS_KEY' in os.environ \
+    and os.environ['AZURE_STORAGE_ACCOUNT_NAME'] and os.environ['AZURE_STORAGE_ACCESS_KEY']:
+  blob = azure.BlobStorage(azure.CLOUD_BLOB_HOST, os.environ['AZURE_STORAGE_ACCOUNT_NAME'], os.environ['AZURE_STORAGE_ACCESS_KEY'])
 else:
   blob = azure.BlobStorage() # use local dev storage
 
