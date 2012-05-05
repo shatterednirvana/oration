@@ -300,7 +300,7 @@ class BlobStorage(Storage):
         for container in containers:
             container_name = container.getElementsByTagName("Name")[0].firstChild.data
             etag = container.getElementsByTagName("Etag")[0].firstChild.data
-            last_modified = time.strptime(container.getElementsByTagName("LastModified")[0].firstChild.data, TIME_FORMAT)
+            last_modified = time.strptime(container.getElementsByTagName("Last-Modified")[0].firstChild.data, TIME_FORMAT)
             yield (container_name, etag, last_modified)
         
         dom.unlink() #Docs say to do this to force GC. Ugh.
@@ -358,7 +358,7 @@ class BlobStorage(Storage):
             for blob in blobs:
                 blob_name = blob.getElementsByTagName("Name")[0].firstChild.data
                 etag = blob.getElementsByTagName("Etag")[0].firstChild.data
-                last_modified = time.strptime(blob.getElementsByTagName("LastModified")[0].firstChild.data, TIME_FORMAT)
+                last_modified = time.strptime(blob.getElementsByTagName("Last-Modified")[0].firstChild.data, TIME_FORMAT)
                 yield (blob_name, etag, last_modified)
             try: marker = dom.getElementsByTagName("NextMarker")[0].firstChild.data
             except: marker = None
