@@ -28,6 +28,6 @@ You can get your subscrition id from the [Windows Azure portal][]. Then upload t
 From a Windows Azure SDK command-line (or just run `run Program Files\Windows Azure SDK\<version>\bin\setenv.cmd` in an existing command line), run the following:
 
     .\pack.cmd
-    waz deploy {{ app_id }} staging {{ app_id }}.cspkg
+    waz deploy {{ app_id }} staging {{ app_id }}.cspkg ServiceConfiguration.Cloud.cscfg
 
 Yay!
