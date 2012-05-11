@@ -18,35 +18,24 @@ import base64
 
 # Enable HTTP debugging http://stackoverflow.com/q/5022945
 import httplib
+from urllib2 import HTTPError
 httplib.HTTPConnection.debuglevel = 1
 
-from azure import blob
+from azure import blob, get_container, queue, get_queue
 import webapp2
-
-import {{ package_name }}
-
-def get_container(namespace):
-  name = "cicero-{{ app_id }}" + namespace
-
-  # Check that it doesn't exist already.
-  for container in blob.list_containers():
-    if container[0] == name: return name
-
-  # Otherwise, create it.
-  code = blob.create_container(name)
-  return name
 
 class TaskRoute(webapp2.RequestHandler):
   def get(self):
     key_name = self.request.get('task_id')
     logging.debug("looking up task info for task id " + key_name)
-    task_info = json.loads(blob.get_blob(get_container('tasks'), key_name))
     result = {} # TODO - see if we can remove that
     try:
-      result = {'result':'success', 'state':task_info['state']}
-    except AttributeError:
-      result = {'result':'failure', 'state':'not found'}
-
+      task_info = json.loads(blob.get_blob(get_container('tasks'), key_name))
+    except HTTPError as e:
+      if e.code == 404:
+        result = {'result':'failure', 'reason':'not found'}
+      else:
+        raise e
     str_result = json.dumps(result)
     logging.debug("task info for task id " + key_name + " is " + str_result)
     self.response.out.write(str_result)
@@ -69,8 +58,7 @@ class TaskRoute(webapp2.RequestHandler):
       url = '/' + function
       logging.debug('starting a request for url ' + url)
 
-      # Just compute inline. TODO: Compute in background, using Azure task queues.
-      compute(json.dumps(json_data))
+      queue.put_message(get_queue('tasks'), json.dumps(json_data))
 
       task_name = base64.b64encode(os.urandom(key_length))
       result = {'result':'success', 'task_id':task_name, 'output':output, 'id':task_name}
@@ -90,13 +78,16 @@ class TaskRoute(webapp2.RequestHandler):
 class DataRoute(webapp2.RequestHandler):
   def get(self):
     key_name = self.request.get('location')
-    output = json.loads(blob.get_blob(get_container('texts'), key_name))
     result = {} # TODO - see if we can remove that
     try:
+      output = json.loads(blob.get_blob(get_container('texts'), key_name))
+    except HTTPError as e:
+      if e.code == 404:
+        result = {'result':'failure', 'reason':'key did not exist'}
+      else:
+        raise e
+    else:
       result = {'result':'success', 'output':output['content']}
-    except AttributeError:
-      result = {'result':'failure', 'reason':'key did not exist'}
-
     self.response.out.write(json.dumps(result))
 
   def put(self):
@@ -120,36 +111,6 @@ class DataRoute(webapp2.RequestHandler):
 
     self.response.out.write(result)
 
-
-def compute(data):
-  logging.debug("starting a new task")
-  raw_data = data
-  json_data = json.loads(raw_data)
-  input_source = str(json_data['input1'])
-  output_dest = str(json_data['output'])
-  task_id = output_dest  # TODO(cgb) - find a way to make me the task's id
-
-  logging.debug("adding info about new task, with id " + task_id)
-  task_info = {'key_name': task_id}
-  task_info['state'] = "started"
-  task_info['start_time'] = datetime.datetime.now().isoformat()
-  blob.put_blob(get_container('tasks'), task_id, json.dumps(task_info))
-
-  logging.debug("done adding task info, running task")
-  output_text = {'key_name': output_dest}
-  output_text['content'] = str({{ package_name }}.{{ function_name }}())
-  blob.put_blob(get_container('texts'), output_dest, json.dumps(output_text))
-
-  logging.debug("done running task - updating task metadata")
-  task_info = json.loads(blob.get_blob(get_container('tasks'), task_id))
-  task_info['state'] = "finished"
-  task_info['end_time'] = datetime.datetime.now().isoformat()
-  blob.put_blob(get_container('tasks'), task_id, json.dumps(task_info))
-
-class ComputeWorker(webapp2.RequestHandler):
-  def post(self):
-    compute(self.request.get('data'))
-
 class IndexPage(webapp2.RequestHandler):
   def get(self):
     # TODO(cgb): write something nicer about oration here!
@@ -158,7 +119,6 @@ class IndexPage(webapp2.RequestHandler):
 logging.getLogger().setLevel(logging.DEBUG)
 app = webapp2.WSGIApplication([('/task', TaskRoute),
                               ('/data', DataRoute),
-                              ('/{{ function_name }}', ComputeWorker),
                               ('/', IndexPage),
                               ], debug=True)
 def main():
