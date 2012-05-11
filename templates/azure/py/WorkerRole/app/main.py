@@ -20,7 +20,7 @@ import base64
 import httplib
 httplib.HTTPConnection.debuglevel = 1
 
-import azure
+from azure import blob
 import webapp2
 
 import {{ package_name }}
