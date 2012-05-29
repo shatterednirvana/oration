@@ -163,7 +163,7 @@ class QueueStorage(Storage):
         return response.code
             
     def put_message(self, queue_name, payload):
-        data = "<QueueMessage><MessageText>%s</MessageText></QueueMessage>" % base64.encodestring(payload)
+        data = "<QueueMessage><MessageText>%s</MessageText></QueueMessage>" % base64.b64encode(payload)
         req = RequestWithMethod("POST", "%s/%s/messages" % (self.get_base_url(), queue_name), data=data)
         req.add_header("Content-Type", "application/xml")
         req.add_header("Content-Length", len(data))
