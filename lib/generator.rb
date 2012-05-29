@@ -13,7 +13,7 @@ class Generator
   #
   # TODO(cgb): Add Java support
   def self.supported_languages
-    %w{py go}
+    %w{py go java}
   end
 
   attr_reader :file_name, :function_name, :output_dir, :app_id, :cloud
@@ -31,12 +31,15 @@ class Generator
   end
   alias :language :file_suffix 
 
-  # The package name in which the function will be found.
-  def package_name
+  # The namespace (full class name, full module name) in which the function
+  # will be found.
+  def namespace
     case language
-    when 'py', 'go'
+    when 'py', 'go', 'java'
       File.basename(file_name, '.' + language)
     end
+    # TODO: Add support for Java packages.
+    #open(file_name) { |f| /^\s*package\s+(.*)\s*;$/.match(f.read)[1] }
   end
 
   # This function finds out what language the application we need to make
@@ -74,7 +77,14 @@ class Generator
     # new directory we are making for their App Engine / Azure app.
     case cloud
     when 'azure'
-      copy_user_files_to(File.join(output_dir, 'WorkerRole', 'app'))
+      case language
+      when 'python'
+        copy_user_files_to(File.join(output_dir, 'WorkerRole', 'app'))
+      when 'java'
+        copy_user_files_to(File.join(output_dir, 'WorkerRole', 'backgroundworker/src/main/java'))
+      else
+        copy_user_files_to(File.join(output_dir, 'WorkerRole', 'backgroundworker'))
+      end
     else
       copy_user_files_to(output_dir)
     end
