@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="{{ app_id }}" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+    <WorkerRole name="WorkerRole" vmsize="ExtraSmall">
+        <Startup>
+            <Task commandLine="installPython.cmd" executionContext="elevated">
+                <Environment>
+                    <Variable name="EMULATED">
+                        <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+                    </Variable>
+                    <Variable name="PYTHON_PATH">
+                        <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='python']/@path" />
+                    </Variable>
+                </Environment>
+            </Task>
+            <Task commandLine="installJava.cmd" executionContext="elevated">
+                <Environment>
+                    <Variable name="EMULATED">
+                        <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+                    </Variable>
+                    <Variable name="JAVA_HOME">
+                        <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='java']/@path" />
+                    </Variable>
+                </Environment>
+            </Task>
+            <Task commandLine="installPythonDependencies.cmd">
+                <Environment>
+                    <Variable name="EMULATED">
+                        <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+                    </Variable>
+                    <Variable name="PYTHON_PATH">
+                        <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='python']/@path" />
+                    </Variable>
+                </Environment>
+            </Task>
+            <Task commandLine="installJavaDependencies.cmd">
+                <Environment>
+                    <Variable name="EMULATED">
+                        <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+                    </Variable>
+                    <Variable name="JAVA_HOME_CLOUD_INSTALLED">
+                        <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='java']/@path" />
+                    </Variable>
+                </Environment>
+            </Task>
+        </Startup>
+        <Runtime>
+            <Environment>
+                <Variable name="EMULATED">
+                    <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+                </Variable>
+                <Variable name="ADDRESS">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/Endpoints/Endpoint[@name='HttpIn']/@address" />
+                </Variable>
+                <Variable name="PORT">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/Endpoints/Endpoint[@name='HttpIn']/@port" />
+                </Variable>
+                <Variable name="PYTHON_PATH">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='python']/@path" />
+                </Variable>
+                <Variable name="JAVA_HOME">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='java']/@path" />
+                </Variable>
+                <Variable name="AZURE_STORAGE_ACCOUNT_NAME" value="" />
+                <Variable name="AZURE_STORAGE_ACCESS_KEY" value="" />
+            </Environment>
+            <EntryPoint>
+                <ProgramEntryPoint commandLine="run.cmd" setReadyOnProcessStart="true" />
+            </EntryPoint>
+        </Runtime>
+        <Endpoints>
+            <InputEndpoint name="HttpIn" protocol="tcp" port="80" />
+        </Endpoints>
+        <LocalResources>
+            <LocalStorage name="python" cleanOnRoleRecycle="true" sizeInMB="1000" />
+            <LocalStorage name="java" cleanOnRoleRecycle="true" sizeInMB="1000" />
+        </LocalResources>
+    </WorkerRole>
+</ServiceDefinition>

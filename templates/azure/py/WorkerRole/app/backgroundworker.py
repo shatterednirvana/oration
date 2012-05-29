@@ -5,7 +5,7 @@ import logging
 import traceback
 
 from azure import blob, get_container, queue, get_queue
-import {{ package_name }}
+import {{ namespace }}
 
 def compute(data):
   logging.debug("starting a new task")
@@ -23,7 +23,7 @@ def compute(data):
 
   logging.debug("done adding task info, running task")
   output_text = {'key_name': output_dest}
-  output_text['content'] = str({{ package_name }}.{{ function_name }}())
+  output_text['content'] = str({{ namespace }}.{{ function_name }}())
   blob.put_blob(get_container('texts'), output_dest, json.dumps(output_text))
 
   logging.debug("done running task - updating task metadata")

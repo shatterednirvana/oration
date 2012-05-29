@@ -50,7 +50,9 @@ def validate_arguments(main_file, function_name, output_dir, app_id, cloud)
   # signatures in those languages.
   python_sig = /def #{function_name}\(/
   go_method_sig = /func #{function_name}\(/
-  all_languages_method_sig_regex = /#{python_sig}|#{go_method_sig}/
+  java_method_sig = /public static .+ #{function_name}\(/
+  all_languages_method_sig_regex = /#{python_sig}|#{go_method_sig}|#{java_method_sig}/
+  puts all_languages_method_sig_regex.to_s
 
   if !contents.match(all_languages_method_sig_regex)
     abort("We couldn't find the function #{function_name} in the file " +
@@ -75,7 +77,7 @@ def oration
 
   validate_arguments(ARGV.flags.file, ARGV.flags.function, ARGV.flags.output, 
     ARGV.flags.appid, ARGV.flags.cloud)
-  Generator.generate_app(ARGV.flags.file, ARGV.flags.function, 
+  Generator.generate_app(File.expand_path(ARGV.flags.file), ARGV.flags.function, 
     ARGV.flags.output, ARGV.flags.appid, ARGV.flags.cloud)
   puts "Done! Your application can be found at #{ARGV.flags.output}"
 end
