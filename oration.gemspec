@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "optiflag"
   s.add_dependency "mustache"
-  s.add_dependency "ptools"
 
   s.files        = Dir.glob("{bin,lib,templates,test}/**/*") + %w(LICENSE README.md)
   s.executables  = ['oration']
