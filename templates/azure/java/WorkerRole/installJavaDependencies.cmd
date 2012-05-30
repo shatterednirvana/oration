@@ -7,6 +7,7 @@ set M2_HOME=%CD%\apache-maven-3.0.4
 set M2=%M2_HOME%\bin
 set PATH=%PATH%;%M2%
 
-REM Install dependencies.
+REM Install dependencies (using a Maven local repository under current directory)
+set MAVEN_OPTS=-Duser.home=%~dp0
 cd backgroundworker
 mvn package
