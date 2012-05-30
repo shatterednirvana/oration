@@ -9,5 +9,4 @@ set PATH=%PATH%;%M2%
 
 REM Install dependencies.
 cd backgroundworker
-start /w cmd
 mvn package
