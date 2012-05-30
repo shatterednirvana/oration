@@ -2,7 +2,7 @@
 <ServiceDefinition name="{{ app_id }}" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
     <WorkerRole name="WorkerRole" vmsize="ExtraSmall">
         <Startup>
-            <Task commandLine="installPython.cmd" executionContext="elevated">
+            <Task commandLine="installPython.cmd >> startup.log 2>&amp;1" executionContext="elevated">
                 <Environment>
                     <Variable name="EMULATED">
                         <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
@@ -12,7 +12,7 @@
                     </Variable>
                 </Environment>
             </Task>
-            <Task commandLine="installJava.cmd" executionContext="elevated">
+            <Task commandLine="installJava.cmd >> startup.log 2>&amp;1" executionContext="elevated">
                 <Environment>
                     <Variable name="EMULATED">
                         <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
@@ -22,7 +22,7 @@
                     </Variable>
                 </Environment>
             </Task>
-            <Task commandLine="installPythonDependencies.cmd">
+            <Task commandLine="installPythonDependencies.cmd >> startup.log 2>&amp;1">
                 <Environment>
                     <Variable name="EMULATED">
                         <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
@@ -32,7 +32,7 @@
                     </Variable>
                 </Environment>
             </Task>
-            <Task commandLine="installJavaDependencies.cmd">
+            <Task commandLine="installJavaDependencies.cmd >> startup.log 2>&amp;1">
                 <Environment>
                     <Variable name="EMULATED">
                         <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
