@@ -37,7 +37,7 @@
                     <Variable name="EMULATED">
                         <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
                     </Variable>
-                    <Variable name="JAVA_HOME_CLOUD_INSTALLED">
+                    <Variable name="JAVA_HOME">
                         <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/LocalResources/LocalResource[@name='java']/@path" />
                     </Variable>
                 </Environment>
