@@ -4,12 +4,28 @@ PATH
     oration (0.0.4)
       mustache
       optiflag
+      ptools
 
 GEM
   remote: http://rubygems.org/
   specs:
     mustache (0.99.4)
     optiflag (0.7)
+    ptools (1.2.2)
+    ptools (1.2.2-x86-mingw32)
+      win32-file (>= 0.5.4)
+    win32-api (1.4.8-x86-mingw32)
+    win32-file (0.6.8)
+      win32-api (>= 1.2.1)
+      win32-file-stat (>= 1.3.2)
+      windows-pr (>= 1.0.8)
+    win32-file-stat (1.3.6)
+      windows-pr (>= 1.0.0)
+    windows-api (0.4.1)
+      win32-api (>= 1.4.5)
+    windows-pr (1.2.1)
+      win32-api (>= 1.4.5)
+      windows-api (>= 0.3.0)
 
 PLATFORMS
   ruby
