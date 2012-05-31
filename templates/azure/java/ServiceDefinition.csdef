@@ -64,7 +64,7 @@
                 <Variable name="AZURE_STORAGE_ACCESS_KEY" value="" />
             </Environment>
             <EntryPoint>
-                <ProgramEntryPoint commandLine="run.cmd" setReadyOnProcessStart="true" />
+                <ProgramEntryPoint commandLine="run.cmd >> app.log 2>&amp;1" setReadyOnProcessStart="true" />
             </EntryPoint>
         </Runtime>
         <Endpoints>
