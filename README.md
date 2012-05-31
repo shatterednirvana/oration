@@ -53,5 +53,5 @@ To get the latest version of Oration from GitHub, run:
     git clone https://ariofrio@github.com/ariofrio/oration.git
     cd oration
     bundle install
-    bundle exec cmd # on Windows, or `bundle exec bash` on Linux
+    bundle exec oration [PARAMS...]
 
