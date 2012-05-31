@@ -52,14 +52,23 @@ Waz-Cmd, first [install ruby][] and, from a command-line, run:
 You'll need your subscription id (from the [Windows Azure portal][]) to replace
 `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` above. Also, the last command will generate 
 a management certificate that you'll need to upload to the [Windows Azure
-Portal][]. Finally, you can deploy:
+Portal][]. Finally, you can **deploy**:
 
   [windows azure portal]: http://windows.azure.com/
 
     waz create application {{ app_id }} "US West"
-    waz deploy {{ app_id }} staging {{ app_id }}.cspkg ServiceConfiguration.Cloud.cscfg
+    waz deploy {{ app_id }} production {{ app_id }}.cspkg ServiceConfiguration.Cloud.cscfg
+    
+Wait around 10 minutes. Use the following command to check if the deployment is ready:
 
-Yay!
+    waz show deployment {{ app_id }} production --expand
+
+Finally, note that you'll need to delete the deployment before replacing it (or you can use
+[VIP swap]):
+
+  [vip swap]: http://msdn.microsoft.com/en-us/library/windowsazure/ee517253.aspx
+
+    waz delete deployment {{ app_id }} production
 
 ## Tips
 
