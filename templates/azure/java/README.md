@@ -49,6 +49,7 @@ Portal][]. Finally, you can deploy:
 
   [windows azure portal]: http://windows.azure.com/
 
+    waz create application {{ app_id }} "US West"
     waz deploy {{ app_id }} staging {{ app_id }}.cspkg ServiceConfiguration.Cloud.cscfg
 
 Yay!
@@ -61,3 +62,9 @@ the <kbd>Tab</kbd> key on your keyboard):
 
     run "C:\Program Files\Windows Azure SDK\<Tab>\bin\setenv.cmd"
 
+If you are on PowerShell, you should run the following instead (or add it to
+your profile). Note that you might need to update "v1.6" with your SDK version.
+
+    $azureEmulator = $env:WindowsAzureEmulatorInstallPath = "C:\Program Files\Windows Azure Emulator"
+    $azureSDK = $env:ServiceHostingSDKInstallPath = "C:\Program Files\Windows Azure SDK\v1.6\bin"
+    $env:path += ";$azureSDK;$azureEmulator\emulator\;$azureEmulator\emulator\devstore\"
