@@ -24,6 +24,13 @@ Storage account credentials][windows azure portal] into
     <Variable name="AZURE_STORAGE_ACCOUNT_NAME" value="" />
     <Variable name="AZURE_STORAGE_ACCESS_KEY" value="" />
 
+If you have Waz-Cmd installed (see below), you can get your credentials if you
+know your storage acount name:
+
+    waz connection string STORAGE_ACCOUNT_NAME
+
+Otherwise, get them from the [Windows Azure Portal][].
+
 ## Deployment
 
 You'll need Windows to package your application for deployment to Azure. From
