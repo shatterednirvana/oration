@@ -78,7 +78,7 @@ class Generator
     case cloud
     when 'azure'
       case language
-      when 'python'
+      when 'py'
         copy_user_files_to(File.join(output_dir, 'WorkerRole', 'app'))
       when 'java'
         copy_user_files_to(File.join(output_dir, 'WorkerRole', 'backgroundworker/src/main/java'))
