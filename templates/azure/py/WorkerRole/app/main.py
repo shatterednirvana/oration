@@ -31,6 +31,7 @@ class TaskRoute(webapp2.RequestHandler):
     result = {} # TODO - see if we can remove that
     try:
       task_info = json.loads(blob.get_blob(get_container('tasks'), key_name))
+      result = {'result': 'success', 'state': task_info['state']}
     except HTTPError as e:
       if e.code == 404:
         result = {'result':'failure', 'reason':'not found'}
@@ -60,6 +61,7 @@ class TaskRoute(webapp2.RequestHandler):
 
       queue.put_message(get_queue('tasks'), json.dumps(json_data))
 
+      key_length = 16
       task_name = base64.b64encode(os.urandom(key_length))
       result = {'result':'success', 'task_id':task_name, 'output':output, 'id':task_name}
       logging.debug('result of job with input data' + str(json_data) + ' was ' + str(result))
