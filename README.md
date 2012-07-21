@@ -43,7 +43,7 @@ After you have your spiffy new AppEngine/Azure Cicero app, read the generated
 `README.md` file (AppEngine: to do,
 [Azure](https://github.com/ariofrio/oration/blob/master/templates/azure/py/README.md))
 for instructions on how to test it locally and deploy it to the cloud. You'll
-need Windows to do this for Azure apps.
+need Windows to deploy Azure apps.
 
 ## Hacking
 
