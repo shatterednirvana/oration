@@ -6,6 +6,9 @@ tested).
 
 ## Local testing
 
+Make sure to have Python installed and added to your `PATH` (My Computer ‣
+Properties ‣ Advanced ‣ Environment Variables). Java is installed automaticallyna sandbox.
+
 From a Windows Azure SDK command-line, run:
 
     .\run.cmd
