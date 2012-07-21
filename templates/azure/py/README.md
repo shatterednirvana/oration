@@ -6,8 +6,9 @@ tested).
 
 ## Local testing
 
-Make sure to have Python installed and added to your `PATH` (My Computer ‣
-Properties ‣ Advanced ‣ Environment Variables). Java is installed automaticallyna sandbox.
+Make sure to have Python installed and added to your `PATH` (My Computer > 
+Properties > Advanced > Environment Variables). Java is installed automatically
+in a sandbox.
 
 From a Windows Azure SDK command-line, run:
 
@@ -28,6 +29,8 @@ Storage account credentials][windows azure portal] into
     <Variable name="AZURE_STORAGE_ACCESS_KEY" value="" />
 
 ## Deployment
+
+**Don't forget to insert your Windows Azure account credentials (see above).**
 
 You'll need Windows to package your application for deployment to Azure. From
 a Windows Azure SDK command-line, run:
