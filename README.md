@@ -4,46 +4,47 @@
 
 ## Installation
 
-Install Ruby and RubyGems: use [this][] on Windows, or run the following on
-Linux:
+### Linux
 
-    apt-get install ruby rubygems || yum install ruby rubygems
+    apt-get install rubygems || yum install rubygems
+    [sudo] gem install oration
 
-  [this]: http://rubyinstaller.org/
+### Windows
 
-Then open a Terminal (on Windows, press <kbd>Win</kbd>-<kbd>R</kbd>, type
-`cmd`, and press Enter) and install Oration:
+ 1. [Install Ruby](http://rubyinstaller.org/)
 
-    gem install oration
+ 2. Open a Terminal (press <kbd>Win</kbd>-<kbd>R</kbd>, type `cmd`, and press <kbd>Enter</kbd>) and install Oration:
+
+        gem install oration
 
 ## Usage
 
-Navigate to a directory with some Python or Go code and run:
+ 1. Get some Python, Java or Go code and run:
 
-    oration -file <file.py/.go> -function <function> -output ../azure-app -appid <app id> -cloud <appengine/azure>
+        oration -file <path/to/file.py|.go|.java> -function <function> \
+          -output ../azure-app -appid <app id> -cloud <appengine|azure>
 
-Note that only Python is supported on Azure at the moment.
+        Options:
 
-This is a description of all the options:
+          -file       (Required, takes 1 argument)
+                          The name of the file containing the function to execute.
+          -function   (Required, takes 1 argument)
+                          The name of the function that should be remotely executed.
+          -output     (Required, takes 1 argument)
+                          Where the newly constructed app should be written to.
+          -appid      (Required, takes 1 argument)
+                          An identifier to be used for this app (in AppEngine, it's the appid).
+          -cloud      (Required, takes 1 argument)
+                          The cloud to which this app will be deployed (appengine, azure).
+          -h          (Optional, takes 0 arguments)
+                          Help
 
-    -file       (Required, takes 1 argument)
-                    The name of the file containing the function to execute.
-    -function   (Required, takes 1 argument)
-                    The name of the function that should be remotely executed.
-    -output     (Required, takes 1 argument)
-                    Where the newly constructed app should be written to.
-    -appid      (Required, takes 1 argument)
-                    An identifier to be used for this app (in AppEngine, it's the appid).
-    -cloud      (Required, takes 1 argument)
-                    The cloud to which this app will be deployed (appengine, azure).
-    -h          (Optional, takes 0 arguments)
-                    Help
+    Go is not supported on Azure, and Java is not supported on AppEngine.
 
-After you have your spiffy new AppEngine/Azure Cicero app, read the generated
-`README.md` file (AppEngine: to do,
-[Azure](https://github.com/ariofrio/oration/blob/master/templates/azure/py/README.md))
-for instructions on how to test it locally and deploy it to the cloud. You'll
-need Windows to deploy Azure apps.
+ 2. Run your app locally or deploy it. See `README.md` for instructions 
+    (AppEngine: to do, [Azure][azure-readme]).
+
+  [azure-readme]: https://github.com/ariofrio/oration/blob/master/templates/azure/py/README.md
 
 ## Hacking
 
@@ -54,4 +55,10 @@ To get the latest version of Oration from GitHub, run:
     cd oration
     bundle install
     bundle exec oration [PARAMS...]
+
+## Roadmap
+
+See [ROADMAP.md][].
+
+  [roadmap.md]: https://github.com/ariofrio/oration/blob/master/README.md
 
