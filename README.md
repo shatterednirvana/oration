@@ -60,5 +60,5 @@ To get the latest version of Oration from GitHub, run:
 
 See [ROADMAP.md][].
 
-  [roadmap.md]: https://github.com/ariofrio/oration/blob/master/README.md
+  [roadmap.md]: https://github.com/ariofrio/oration/blob/master/ROADMAP.md
 
