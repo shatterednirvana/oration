@@ -17,11 +17,13 @@
 
  - Azure: Upload logging to a service like [Logentries][] (they have native
    support for Python and Java) [Loggly][], or [PaperTrail][].
- - Both: Support `stdout`-based apps with wrapper that modifies `sys.argv`
-   and uses StringIO (Python), or supplies arguments to `main()` and uses 
-   `System.setOut()` (Java).
+
+ - Both: Support `stdout`-based apps with wrapper that modifies `sys.argv`,
+   uses StringIO, and [reloads the module][] (Python), or supplies arguments
+   to `main()` and uses `System.setOut()` (Java).
 
   [logentries]: http://logentries.com/
   [loggly]: http://loggly.com/
   [papertrail]: http://papertrailapp.com/
+  [reloads the module]: http://stackoverflow.com/q/6507896
 
