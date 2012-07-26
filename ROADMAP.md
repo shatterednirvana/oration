@@ -26,3 +26,8 @@
   [papertrail]: http://papertrailapp.com/
   [reloads the module]: http://stackoverflow.com/q/6507896
 
+**Some time, maybe**
+
+ - Allow mix-and-matching queue, storage, and compute services.
+ - Authentication (AppEngine can maybe use Google, what about Azure? Use
+   custom scheme?)
