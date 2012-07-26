@@ -50,7 +50,7 @@ class TaskRoute(webapp2.RequestHandler):
     output = ''
     if self.request.get('output') == '':
       key_length = 16  # for now, randomly generates keys 16 chars long
-      json_data['output'] = base64.b64encode(os.urandom(key_length))  # TODO - does this work in app engine?
+      json_data['output'] = base64.b64encode(os.urandom(key_length), '-_')  # TODO - does this work in app engine?
     else:
       json_data['output'] = str(self.request.get('output'))
     output = str(json_data['output'])
