@@ -1,10 +1,5 @@
 # Programmer: Chris Bunch
-
-$:.unshift File.join(File.dirname(__FILE__), "..", "bin")
 require 'oration'
-
-require 'test/unit'
-
 
 class FakeFile
   def self.exists?(file_name)

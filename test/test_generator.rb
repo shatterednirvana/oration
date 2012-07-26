@@ -1,11 +1,5 @@
 # Programmer: Chris Bunch
-
-
-$:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 require 'generator'
-
-require 'test/unit'
-
 
 class DoNothingGenerator
   def self.does_nothing(a, b, c, d)

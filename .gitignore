@@ -1,3 +1,2 @@
-.DS_Store
-*.swp
-*.~1~
+*.pyc
+/templates/azure/java/WorkerRole/jdk.zip
