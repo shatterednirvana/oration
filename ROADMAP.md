@@ -28,6 +28,7 @@
 
 **Some time, maybe**
 
- - Allow mix-and-matching queue, storage, and compute services.
- - Authentication (AppEngine can maybe use Google, what about Azure? Use
+ - Both: Allow mix-and-matching queue, storage, and compute services.
+ - Both: Authentication (AppEngine can maybe use Google, what about Azure? Use
    custom scheme?)
+ - Azure: Cache Java/Python distributables 
