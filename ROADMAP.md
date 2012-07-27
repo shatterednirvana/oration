@@ -2,13 +2,14 @@
 
 **Version 0.4:** The Azure release
 
- - Both: More useful (stack traces) error reporting on frontend.
+ - ✓ Azure: More useful (stack traces) error reporting on frontend.
+ - ✓ Azure: Clean up the Cicero frontend API.
  - Azure: It works again.
  - Azure: Do logging in the code, not in the service definition.
  - Azure: Test suite for harness and apps.
 
 **Version 0.5:** The AppEngine release
- - Both: Clean up the Cicero frontend API.
+ - AppEngine: Clean up the Cicero frontend API.
  - AppEngine: Support for Java.
  - AppEngine: Add a README.md with instructions (or a link).
  - AppEngine: Test suite for apps.
