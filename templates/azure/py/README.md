@@ -1,69 +1,51 @@
-To locally test or deploy your application you'll need the [Windows Azure SDK
-for "Other" languages](https://www.windowsazure.com/en-us/develop/other/) (any
-language SDK will work, but this one has less stuff). You'll also need a recent
-version of Windows (Windows 7 Home and Windows 7 Professional have been
-tested).
+**First,** Get on Windows and install the [Windows Azure SDK for "Other" languages][sdk]. 
+Note that any language SDK will work.
 
-## Local testing
+  [sdk]: https://www.windowsazure.com/en-us/develop/other/
 
-Make sure to have Python installed and added to your `PATH` (My Computer > 
-Properties > Advanced > Environment Variables). Java is installed automatically
-in a sandbox.
+## Run locally
 
-From a Windows Azure SDK command-line, run:
+ 1. Install [Python 2.x][] and add the installation directory (e.g. C:\Python27) to your path.
 
-    .\run.cmd
+    > To add a directory to your path, click on the Start menu, right click on Computer, and then
+    click on Properties > Advanced system settings > Environment Variables. Add or edit an
+    environment variable called "PATH" (case insensitive).
 
-To shut down the Azure emulators, run:
+  [python 2.x]: http://python.org/download/
+
+ 2. In a Windows Azure Command Prompt, run
+
+        cd my\generated\app\directory
+        .\run.cmd
+
+Your app will be accessible at <http://localhost:81/>. Try using [rest-client][] to test it.
+
+  [rest-client]: https://github.com/archiloque/rest-client
+
+When you want to shut down the app, go to a Windows Azure Command Prompt and run
 
     csrun /devfabric:shutdown
     csrun /devstore:shutdown
 
-## Configuration
+## Deploy to Azure
 
-**Important:** before deploying to Azure, you should insert your [Windows Azure
-Storage account credentials][windows azure portal] into
-`ServiceDefinition.csdef`. Look for the following lines:
+ 1. If necessary, [create a Storage Account][portal storage].
 
-    <Variable name="AZURE_STORAGE_ACCOUNT_NAME" value="" />
-    <Variable name="AZURE_STORAGE_ACCESS_KEY" value="" />
+  [portal storage]: https://manage.windowsazure.com/#Workspace/StorageExtension/storage
 
-## Deployment
+ 2. Insert your storage account credentials into ServiceDefinition.csdef. Look
+    for the following lines:
 
-**Don't forget to insert your Windows Azure account credentials (see above).**
+        <Variable name="AZURE_STORAGE_ACCOUNT_NAME" value="" />
+        <Variable name="AZURE_STORAGE_ACCESS_KEY" value="" />
 
-You'll need Windows to package your application for deployment to Azure. From
-a Windows Azure SDK command-line, run:
+ 3. In a Windows Azure Command Prompt, run
 
-    .\pack.cmd
+        .\pack.cmd
 
-The package will be called "{{ app_id }}.cspkg" and you can deploy it to Azure
-either using the [Windows Azure portal][] or the excelent [Waz-Cmd][]. To use
-Waz-Cmd, first [install ruby][] and, from a command-line, run:
+ 4. [Create a cloud service][portal service] and upload the service package (.cspkg)
+    and service configuration (ServiceConfiguration.Cloud.cscfg).
 
-  [waz-cmd]: https://github.com/smarx/waz-cmd
-  [install ruby]: http://rubyinstaller.org/
+  [portal service]: https://manage.windowsazure.com/#Workspace/CloudServicesExtension/list
 
-    gem install waz-cmd
-    was set subscriptionId XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-    waz generate certificates
-
-You'll need your subscription id (from the [Windows Azure portal][]) to replace
-`XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` above. Also, the last command will generate 
-a management certificate that you'll need to upload to the [Windows Azure
-Portal][]. Finally, you can deploy:
-
-  [windows azure portal]: http://windows.azure.com/
-
-    waz deploy {{ app_id }} staging {{ app_id }}.cspkg ServiceConfiguration.Cloud.cscfg
-
-Yay!
-
-## Tips
-
-If you are already on a command line session and you don't want to start a new
-one to get access to the Windows Azure SDK tools, run (`<Tab>` denotes pressing
-the <kbd>Tab</kbd> key on your keyboard):
-
-    run "C:\Program Files\Windows Azure SDK\<Tab>\bin\setenv.cmd"
-
+Wait around 10 minutes, and your app will be deployed!
