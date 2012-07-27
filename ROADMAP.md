@@ -22,6 +22,7 @@
    to `main()` and uses `System.setOut()` (Java).
  - Both: Automatically choose appid from file name and choose output
    directory from file directory (add -azure or -appengine).
+ - Both: Add a -f option that deletes output directory before recreating it.
 
   [logentries]: http://logentries.com/
   [loggly]: http://loggly.com/
