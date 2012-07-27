@@ -20,6 +20,8 @@
  - Both: Support `stdout`-based apps with wrapper that modifies `sys.argv`,
    uses StringIO, and [reloads the module][] (Python), or supplies arguments
    to `main()` and uses `System.setOut()` (Java).
+ - Both: Automatically choose appid from file name and choose output
+   directory from file directory (add -azure or -appengine).
 
   [logentries]: http://logentries.com/
   [loggly]: http://loggly.com/
