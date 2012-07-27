@@ -21,6 +21,9 @@
  - Both: Support `stdout`-based apps with wrapper that modifies `sys.argv`,
    uses StringIO, and [reloads the module][] (Python), or supplies arguments
    to `main()` and uses `System.setOut()` (Java).
+ - Both: Automatically choose appid from file name and choose output
+   directory from file directory (add -azure or -appengine).
+ - Both: Add a -f option that deletes output directory before recreating it.
 
   [logentries]: http://logentries.com/
   [loggly]: http://loggly.com/
@@ -29,6 +32,7 @@
 
 **Some time, maybe**
 
- - Allow mix-and-matching queue, storage, and compute services.
- - Authentication (AppEngine can maybe use Google, what about Azure? Use
+ - Both: Allow mix-and-matching queue, storage, and compute services.
+ - Both: Authentication (AppEngine can maybe use Google, what about Azure? Use
    custom scheme?)
+ - Azure: Cache Java/Python distributables 
