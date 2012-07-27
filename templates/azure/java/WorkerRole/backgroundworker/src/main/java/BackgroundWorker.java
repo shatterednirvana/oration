@@ -54,46 +54,50 @@ public class BackgroundWorker {
   }
 
   public void compute(String json) throws UnsupportedEncodingException, URISyntaxException, StorageException, IOException {
-    log("================================ COMPUTING ========================");
     JSONObject data = (JSONObject) JSONValue.parse(json);
-    String inputSource = (String) data.get("input1");
-    String outputDest = (String) data.get("output");
-    String taskId = outputDest;
+    String id = (String) data.get("id");
+    String function = (String) data.get("function");
+    String outputLocation = (String) data.get("output_location");
+    info("Starting task " + id + " for function " + function);
 
-    log("adding info about new task, with id " + taskId);
+    info("Updating status of task " + id + ": started");
     JSONObject taskInfo = new JSONObject();
-    taskInfo.put("key_name", taskId);
+    taskInfo.put("id", id);
     taskInfo.put("state", "started");
     taskInfo.put("start_time", df.format(new Date()));
     byte[] bytes = taskInfo.toJSONString().getBytes("UTF-8");
-    taskContainer.getBlockBlobReference(taskId).upload(
+    taskContainer.getBlockBlobReference(id).upload(
         new ByteArrayInputStream(bytes), bytes.length);
 
-    log("done adding task info, running task");
+    info("Actually running task " + id);
+    String content = ((Object) {{ namespace }}.{{ function_name }}()).toString();
+
+    info("Putting output data into location " + outputLocation);
     JSONObject outputText = new JSONObject();
-    outputText.put("key_name", outputDest);
-    outputText.put("content", ((Object) {{ namespace }}.{{ function_name }}()).toString());
+    outputText.put("location", outputLocation);
+    outputText.put("content", content);
     bytes = outputText.toJSONString().getBytes("UTF-8");
-    textContainer.getBlockBlobReference(outputDest).upload(
+    textContainer.getBlockBlobReference(outputLocation).upload(
         new ByteArrayInputStream(bytes), bytes.length);
 
-    log("done running task - updating task metadata");
+    info("Updating status of task " + id + ": finished");
     ByteArrayOutputStream taskInfoStream = new ByteArrayOutputStream();
-    taskContainer.getBlockBlobReference(taskId).download(taskInfoStream);
+    taskContainer.getBlockBlobReference(id).download(taskInfoStream);
     taskInfo = (JSONObject) JSONValue.parse(taskInfoStream.toString("UTF-8"));
     taskInfo.put("state", "finished");
-    taskInfo.put("end_time", df.format(new Date()));
+    taskInfo.put("finish_time", df.format(new Date()));
     bytes = taskInfo.toJSONString().getBytes("UTF-8");
-    taskContainer.getBlockBlobReference(taskId).upload(
+    taskContainer.getBlockBlobReference(id).upload(
         new ByteArrayInputStream(bytes), bytes.length);
   }
 
   public void start() throws InterruptedException {
     while(true) {
       try {
-        log("Polling for a task.");
+        debug("Polling for a task");
         CloudQueueMessage message = taskQueue.retrieveMessage();
         if(message == null) continue;
+        info("Received a task");
         compute(message.getMessageContentAsString());
         taskQueue.deleteMessage(message);
       } catch(Exception e) {
@@ -104,8 +108,13 @@ public class BackgroundWorker {
     }
   }
 
-  private void log(String message) {
+  private void info(String message) {
     System.err.println(message);
+  }
+
+  private final boolean isDebug = false;
+  private void debug(String message) {
+    if(isDebug) System.err.println(message);
   }
 
   public static void main(String[] args) throws URISyntaxException, InvalidKeyException, StorageException, InterruptedException {
