@@ -69,7 +69,7 @@ class TaskRoute(webapp2.RequestHandler):
       self.response.out.write(json.dumps(result))
 
   def post(self):
-    put()
+    self.put()
 
   def delete(self):
     logging.info("NOT cancelling task: not implemented")
