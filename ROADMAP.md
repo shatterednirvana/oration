@@ -35,4 +35,7 @@
  - Both: Allow mix-and-matching queue, storage, and compute services.
  - Both: Authentication (AppEngine can maybe use Google, what about Azure? Use
    custom scheme?)
- - Azure: Cache Java/Python distributables 
+ - Azure: Cache Java/Python distributables.
+ - Azure: Use pre-built role (like [Smarx Role][]) or Linux VMs.
+
+  [smarx role]: http://smarxrole.codeplex.com/
