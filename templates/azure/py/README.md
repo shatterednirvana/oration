@@ -20,7 +20,7 @@ Note that any language SDK will work.
 
 Your app will be accessible at <http://localhost:81/>. Try using [rest-client][] to test it.
 
-  [rest-client]: https://github.com/archiloque/rest-client
+  [rest-client]: https://github.com/archiloque/rest-client#shell
 
 When you want to shut down the app, go to a Windows Azure Command Prompt and run
 
