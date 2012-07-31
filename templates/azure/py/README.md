@@ -13,7 +13,11 @@ Note that any language SDK will work.
 
   [python 2.x]: http://python.org/download/
 
- 2. In a Windows Azure Command Prompt, run
+ 2. **You only need to do this once per computer:** In the notification area, right click on the
+    Azure icon (blue Windows icon), click on Show Storage Emulator UI, and finally make sure the
+    checkboxes for Blob and Queue storage are marked.
+
+ 3. In a Windows Azure Command Prompt, run
 
         cd my\generated\app\directory
         .\run.cmd
