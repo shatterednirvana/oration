@@ -4,6 +4,7 @@
 
  - ✓ Azure: More useful (stack traces) error reporting on frontend.
  - ✓ Azure: Clean up the Cicero frontend API.
+ - ✓ Azure: More complete local testing and deployment instructions.
  - Azure: It works again.
  - Azure: Do logging in the code, not in the service definition.
  - Azure: Test suite for harness and apps.
