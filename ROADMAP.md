@@ -35,6 +35,8 @@
 
 **Some time, maybe**
 
+ - Both: Add debugging instructions to READMEs.
+ - Both: Store errors from user's code into task status.
  - Both: Allow mix-and-matching queue, storage, and compute services.
  - Both: Authentication (AppEngine can maybe use Google, what about Azure? Use
    custom scheme?)
