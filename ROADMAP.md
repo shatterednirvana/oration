@@ -9,6 +9,7 @@
  - Azure: It works again.
  - Azure: Do logging in the code, not in the service definition.
  - Azure: Test suite for harness and apps.
+ - Both: Document the Cicero frontend API in oration/README.md.
 
 **Version 0.5:** The AppEngine release
  - AppEngine: Clean up the Cicero frontend API.
