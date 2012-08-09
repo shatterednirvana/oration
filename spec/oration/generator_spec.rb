@@ -107,7 +107,7 @@ module Oration
       end
     end
 
-    context "when validating it's arguments" do
+    context "when validating its arguments" do
       it "doesn't support C files in AppEngine" do
         g = Generator.new file: "boo.c", function: "blarg", cloud: "appengine"
         expect { g.validate }.to raise_error
