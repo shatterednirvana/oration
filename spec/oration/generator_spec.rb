@@ -14,7 +14,7 @@ end
 shared_context "start and stop Python app" do |name, path|
   let(:port) { "8000" }
   before(:each) do
-    Dir.chdir File.join(generator.output_directory, File.dirname(path)) do
+    Dir.chdir File.join(@generator.output_directory, File.dirname(path)) do
       instance_variable_set "@#{name}", IO.popen([{"PORT" => port}, "python", File.basename(path)])
     end
   end
@@ -38,7 +38,7 @@ shared_examples "Cicero API" do
   let(:host) { "http://localhost:#{port}" }
   it "responds to GET /" do RestClient::get "#{host}/" end
   it "responds to post, get status and get output of task" do
-    task = JSON.parse RestClient::post("#{host}/task?f=#{generator.function}", nil)
+    task = JSON.parse RestClient::post("#{host}/task?f=#{@generator.function}", nil)
     raise "starting a task failed" unless task["result"] == "success"
 
     loop do
@@ -98,12 +98,12 @@ module Oration
 
       context "in Python" do
         context "for Azure" do
-          let(:generator) do
-            Generator.new \
+          before(:each) {
+            @generator = Generator.new \
               file: "#{@data}/get-random-number-python/get_random_number.py",
               function: "get_random_number", cloud: "azure"
-          end
-          before(:each) { generator.run! }
+            @generator.run!
+          }
 
           include_context "start and stop Azure Storage Emulator"
           include_context "start and stop Python app", :main, "WorkerRole/app/main.py"
