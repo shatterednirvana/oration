@@ -23,7 +23,7 @@ def compute(data):
 
   logging.info("Updating status of task " + id + ": started")
   blob.put_blob(get_container('tasks'), id,
-      json.dumps({'id': id, 'state': 'started',
+      json.dumps({'id': id, 'status': 'started',
                   'start_time': datetime.now().isoformat()}))
 
   logging.info("Actually running task " + id)
@@ -35,7 +35,7 @@ def compute(data):
 
   logging.info("Updating status of task " + id + ": finished")
   status = json.loads(blob.get_blob(get_container('tasks'), id))
-  status['state'] = 'finished'
+  status['status'] = 'finished'
   status['finish_time'] = datetime.now().isoformat()
   blob.put_blob(get_container('tasks'), id, json.dumps(status))
 
