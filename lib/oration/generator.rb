@@ -9,11 +9,12 @@ module Oration
       appengine: ['py', 'go']}
     end
 
-    attr_accessor :file, :function, :cloud, :application_name_salt
+    attr_reader :file, :function, :cloud, :application_name_salt
     def initialize(params = {})
       params.each do |key, value|
         instance_variable_set("@#{key}".to_sym, value)
       end
+      @file = File.absolute_path(file)
       raise "file not supplied" if @file.nil?
       raise "function name not supplied" if @function.nil?
       raise "cloud not supplied" if @cloud.nil?
@@ -37,7 +38,7 @@ module Oration
       File.dirname(file)
     end
     def output_directory
-      input_directory + "-azure"
+      "#{input_directory}-#{cloud}"
     end
 
     # The language of the file to cloudify, as a file suffix.
@@ -73,15 +74,34 @@ module Oration
       end
     end
 
-    def validate
+    def validate_arguments
       raise "file has empty extension" if language.empty?
       unless Oration::Generator.supported_clouds[cloud.to_sym].include?(language)
         raise "language not supported for cloud '#{cloud}'" 
       end
     end
 
+    def validate_code
+      raise "file does not exist: #{file}" if not File.exists?(file)
+      raise "function #{function} not found in #{file}" if not function_found?
+    end
+
+    def function_found?
+      case language
+      when 'py' then File.read(file) =~ /def #{function_name}\(/
+      when 'go' then File.read(file) =~ /func #{function_name}\(/
+      when 'java' then File.read(file) =~ /public static .+ #{function_name}\(/
+      end
+    end
+
+    def validate_output
+      raise "output directory #{output_directory} already exists, please remove it" if File.exists?(output_directory)
+    end
+
     def run!
-      validate
+      validate_arguments
+      validate_code
+      validate_output
 
       # Create boilerplate code (cloud "harness"). Templates can call
       # instance methods.
