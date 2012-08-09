@@ -22,9 +22,17 @@ EOF
     option :help, :short => "-h", :long => "--help", :boolean => true,
       :description => "display this help and exit", :on => :tail,
       :show_options => true, :exit => 0
+    option :version, :short => "-v", :long => "--version", :boolean => true,
+      :description => "print program version", :on => :tail
 
     def run!
       parse_options
+      if config.options[:version]
+        require 'oration/version'
+        puts "Oration version #{VERSION}"
+        exit
+      end
+
       generator = Generator.new config
       generator.run!
     end
