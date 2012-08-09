@@ -14,6 +14,11 @@ Gem::Specification.new do |s|
 
   s.add_dependency "optiflag"
   s.add_dependency "mustache"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "simplecov"
+  s.add_development_dependency "json"
+  s.add_development_dependency "rest-client"
+  s.add_development_dependency "require_all"
 
   s.files        = Dir.glob("{bin,lib,templates,test}/**/*") + %w(LICENSE README.md)
   s.executables  = ['oration']

@@ -71,7 +71,6 @@ def validate_arguments(main_file, function_name, output_dir, app_id, cloud)
   end
 end
 
-
 def oration
   OrationFlags.and_process!
 

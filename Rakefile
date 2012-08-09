@@ -1,9 +1,8 @@
+require 'rspec/core/rake_task'
 require 'rdoc/task'
 
-task :default =>: test
-task :test do
-  sh 'ruby test/ts_all.rb'
-end
+task :default => :spec
+RSpec::Core::RakeTask.new
 
 Rake::RDocTask.new :rdoc do |rdoc|
   rdoc.title = 'Oration'
