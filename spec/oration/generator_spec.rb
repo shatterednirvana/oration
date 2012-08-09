@@ -5,10 +5,20 @@ require 'rest_client'
 require 'json'
 
 def kill_process(pid)
+  begin
+    Process.getpgid pid
+  rescue Errno::ESRCH
+    raise "application failed"
+  end
+
   Process.kill "KILL", pid
   Process.wait pid
-  raise "application did not exit" if not $?.exited?
-  raise "application failed" if not $?.success?
+
+  begin
+    Process.getpgid pid
+    raise "application did not exit"
+  rescue Errno::ESRCH
+  end
 end
 
 def generator_options(data, cloud, language)
@@ -31,8 +41,11 @@ shared_context "start and stop Python app" do |name, path|
   let(:port) { "8000" }
   before(:each) do
     Dir.chdir File.join(@generator.output_directory, File.dirname(path)) do
-      instance_variable_set "@#{name}", IO.popen([{"PORT" => port}, "python", File.basename(path)])
+      ENV['PORT'] = port
+      instance_variable_set "@#{name}", IO.popen("python \"#{File.basename(path)}\"")
+      ENV['PORT'] = ""
     end
+    sleep 1
   end
   after(:each) { kill_process instance_variable_get("@#{name}").pid }
 end
@@ -180,16 +193,29 @@ module Oration
 
       context "in Python" do
         context "for Azure" do
-          before(:each) do
-            @generator = Generator.new generator_options(@data, "azure", "py")
-            @generator.run!
+          context "using local storage", :require_windows => true do
+            before(:each) do
+              @generator = Generator.new generator_options(@data, "azure", "py")
+              @generator.run!
+            end
+
+            include_context "start and stop Azure Storage Emulator"
+            include_context "start and stop Python app", :main, "WorkerRole/app/main.py"
+            include_context "start and stop Python app", :bg, "WorkerRole/app/backgroundworker.py"
+
+            include_examples "Cicero API"
           end
+          context "using Azure storage", :require_azure_credentials => true do
+            before(:each) do
+              @generator = Generator.new generator_options(@data, "azure", "py")
+              @generator.run!
+            end
 
-          include_context "start and stop Azure Storage Emulator"
-          include_context "start and stop Python app", :main, "WorkerRole/app/main.py"
-          include_context "start and stop Python app", :bg, "WorkerRole/app/backgroundworker.py"
+            include_context "start and stop Python app", :main, "WorkerRole/app/main.py"
+            include_context "start and stop Python app", :bg, "WorkerRole/app/backgroundworker.py"
 
-          include_examples "Cicero API"
+            include_examples "Cicero API"
+          end
         end
       end
     end
