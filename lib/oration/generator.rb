@@ -5,8 +5,8 @@ module Oration
   class Generator
     # A hash from supported clouds to lists of supported languages.
     def self.supported_clouds
-      {azure: ['py', 'java'],
-      appengine: ['py', 'go']}
+      { :azure => ['py', 'java'],
+        :appengine => ['py', 'go'] }
     end
 
     attr_reader :file, :function, :cloud, :application_name_salt
@@ -14,7 +14,7 @@ module Oration
       params.each do |key, value|
         instance_variable_set("@#{key}".to_sym, value)
       end
-      @file = File.absolute_path(file)
+      @file = File.expand_path(file)
       raise "file not supplied" if @file.nil?
       raise "function name not supplied" if @function.nil?
       raise "cloud not supplied" if @cloud.nil?
