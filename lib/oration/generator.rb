@@ -121,6 +121,8 @@ module Oration
 
       # Copy files in the directory where user's code is.
       copy_user_files_to output_user_files_directory
+
+      puts output_directory
     end
 
     private

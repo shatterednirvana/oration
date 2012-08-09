@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
     embarrassingly parallel fashion.
   }
 
-  s.add_dependency "optiflag"
+  s.add_dependency "mixlib-cli"
   s.add_dependency "mustache"
   s.add_development_dependency "rspec"
   s.add_development_dependency "simplecov"

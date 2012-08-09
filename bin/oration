@@ -9,5 +9,6 @@ end
 $:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 # start up the CLI
-require "oration"
-oration
+require "oration/cli"
+cli = Oration::CLI.new
+cli.run!

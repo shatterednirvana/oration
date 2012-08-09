@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     oration (0.0.4)
+      mixlib-cli
       mustache
-      optiflag
 
 GEM
   remote: http://rubygems.org/
@@ -11,9 +11,9 @@ GEM
     diff-lcs (1.1.3)
     json (1.5.4)
     mime-types (1.18)
+    mixlib-cli (1.2.2)
     multi_json (1.3.6)
     mustache (0.99.4)
-    optiflag (0.7)
     require_all (1.2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
