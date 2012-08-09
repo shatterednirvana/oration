@@ -5,6 +5,7 @@
  - ✓ Azure: More useful (stack traces) error reporting on frontend.
  - ✓ Azure: Clean up the Cicero frontend API.
  - ✓ Azure: More complete local testing and deployment instructions.
+ - Azure: Add support for custom Java packages.
  - Azure: It works again.
  - Azure: Do logging in the code, not in the service definition.
  - ✓ Azure: Test suite for Python app.
@@ -17,7 +18,7 @@
  - AppEngine: Support for Java.
  - AppEngine: Add a README.md with instructions (or a link).
  - AppEngine: Test suite for apps.
- - Both: Add documentation for Cicero frontend API.
+ - Both: Document the Cicero frontend API in oration/README.md.
 
 **Version 1.0**
 
@@ -29,6 +30,7 @@
  - Both: Automatically choose appid from file name and choose output
    directory from file directory (add -azure or -appengine).
  - Both: Add a -f option that deletes output directory before recreating it.
+ - Both: Replace '/' route with status (connections, background process) page.
 
   [logentries]: http://logentries.com/
   [loggly]: http://loggly.com/
@@ -37,6 +39,8 @@
 
 **Some time, maybe**
 
+ - Both: Add debugging instructions to READMEs.
+ - Both: Store errors from user's code into task status.
  - Both: Allow mix-and-matching queue, storage, and compute services.
  - Both: Authentication (AppEngine can maybe use Google, what about Azure? Use
    custom scheme?)

@@ -6,7 +6,7 @@ Note that any language SDK will work.
 ## Run locally
 
  1. **You only need to do this once per computer:** Install [Python 2.x][] and add the
-    installation directory (e.g. C:\Python27) to your path.
+    installation and scripts directory (e.g. C:\Python27;C:\Python27\Scripts) to your path.
 
     > To add a directory to your path, click on the Start menu, right click on Computer, and then
     click on Properties > Advanced system settings > Environment Variables. Add or edit an
