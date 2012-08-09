@@ -73,11 +73,15 @@ module Oration
       end
     end
 
-    def run!
+    def validate
       raise "file has empty extension" if language.empty?
       unless Oration::Generator.supported_clouds[cloud.to_sym].include?(language)
         raise "language not supported for cloud '#{cloud}'" 
       end
+    end
+
+    def run!
+      validate
 
       # Create boilerplate code (cloud "harness"). Templates can call
       # instance methods.

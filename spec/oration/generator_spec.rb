@@ -11,6 +11,22 @@ def kill_process(pid)
   raise "application failed" if not $?.success?
 end
 
+def generator_options(data, cloud, language)
+  case language
+  when "py"
+    { file: "#{data}/get-random-number-python/get_random_number.py",
+      function: "get_random_number", cloud: cloud }
+  when "java"
+    { file: "#{data}/get-random-number-java/GetRandomNumber.java",
+      function: "getRandomNumber", cloud: cloud }
+  when "go"
+    { file: "#{data}/get-random-number-go/get_random_number.go",
+      function: "GetRandomNumber", cloud: cloud }
+  else
+    raise "unsupported language #{language}"
+  end
+end
+
 shared_context "start and stop Python app" do |name, path|
   let(:port) { "8000" }
   before(:each) do
@@ -64,46 +80,77 @@ end
 module Oration
   describe Generator do
 
+    before(:each, data: true) { @data = get_test_data }
+    after(:each, data: true) { FileUtils.rm_r @data }
+
     context "when automatically generating an app name" do
       it "includes the file and function name in the app name" do
-        g = Oration::Generator.new file: "path/to/short.py",
+        g = Generator.new file: "path/to/short.py",
           function: "name", cloud: "azure"
         g.application_name.should include("shortname")
       end
       it "truncates the app name at 20 characters, 15 from file and function names" do
-        g = Oration::Generator.new file: "path/longdirectoryname/longfilename.py",
+        g = Generator.new file: "path/longdirectoryname/longfilename.py",
           function: "longfunctionname", cloud: "azure"
         g.application_name.length.should <= 20
         g.application_name.should include("longfilenamelong") # 15 chars
       end
       it "removes special characters from the app name" do
-        g = Oration::Generator.new file: "some-special/char_ACTERS.py",
+        g = Generator.new file: "some-special/char_ACTERS.py",
           function: "name", cloud: "azure"
         g.application_name.should =~ /[a-z0-9]/
       end
       it "creates a unique application name each time" do
-        a = Oration::Generator.new file: "a.py", function: "name", cloud: "azure"
-        b = Oration::Generator.new file: "a.py", function: "name", cloud: "azure"
+        a = Generator.new file: "a.py", function: "name", cloud: "azure"
+        b = Generator.new file: "a.py", function: "name", cloud: "azure"
         a.application_name.should_not == b.application_name
+      end
+    end
 
-        [0..5].each { |x| puts x }
+    context "when validating it's arguments" do
+      it "doesn't support C files in AppEngine" do
+        g = Generator.new file: "boo.c", function: "blarg", cloud: "appengine"
+        expect { g.validate }.to raise_error
+      end
+      it "doesn't support files without an extension" do
+        g = Generator.new file: "boo", function: "blarg", cloud: "appengine"
+        expect { g.validate }.to raise_error
+      end
+      it "supports Python files in AppEngine" do
+        g = Generator.new file: "boo.py", function: "blarg", cloud: "appengine"
+        expect { g.validate }.to_not raise_error
+      end
+      it "doesn't support C files in Azure" do
+        g = Generator.new file: "boo.c", function: "blarg", cloud: "azure"
+        expect { g.validate }.to raise_error
+      end
+      it "supports Python files in Azure" do
+        g = Generator.new file: "boo.py", function: "blarg", cloud: "azure"
+        expect { g.validate }.to_not raise_error
+      end
+      # The rest are not tested because if these work, then they
+      # ovbiously work properly. See `Generator.supported_clouds`.
+    end
+
+    it "generates apps for each supported language and cloud without failure", data: true do
+      Generator.supported_clouds.each do |cloud, languages|
+        languages.each do |language|
+          g = Generator.new generator_options(@data, cloud.to_s, language)
+          expect { g.run! }.to_not raise_error
+        end
       end
     end
 
     it "should pass the old test suite"
 
-    context "when generating apps" do
-      before(:each) { @data = get_test_data }
-      after(:each) { FileUtils.rm_r @data }
+    describe "-- a generated app", data: true do
 
       context "in Python" do
         context "for Azure" do
-          before(:each) {
-            @generator = Generator.new \
-              file: "#{@data}/get-random-number-python/get_random_number.py",
-              function: "get_random_number", cloud: "azure"
+          before(:each) do
+            @generator = Generator.new generator_options(@data, "azure", "py")
             @generator.run!
-          }
+          end
 
           include_context "start and stop Azure Storage Emulator"
           include_context "start and stop Python app", :main, "WorkerRole/app/main.py"
