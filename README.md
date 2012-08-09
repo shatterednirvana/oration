@@ -1,4 +1,4 @@
-# Oration [![Travis CI status](https://secure.travis-ci.org/ariofrio/oration.png)](http://travis-ci.org/ariofrio/oration)
+# Oration [![Travis CI status](https://secure.travis-ci.org/ariofrio/oration.png)](http://travis-ci.org/ariofrio/oration) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/ariofrio/oration)
 
 (The tests haven't been updated to the latest refactoring in HEAD, stay tuned. :)
 
@@ -55,6 +55,17 @@ To get the latest version of Oration from GitHub, run:
     cd oration
     bundle install
     bundle exec oration [PARAMS...]
+
+### Testing
+
+ 1. Install Python.
+ 1. Install [setuptools][] or [distribute][].
+ 2. Install [Pip][].
+ 3. `pip install webapp2 webob rocket`
+
+  [setuptools]: http://pypi.python.org/pypi/setuptools
+  [distribute]: http://pypi.python.org/pypi/distribute
+  [pip]: http://www.pip-installer.org/en/latest/installing.html#using-the-installer
 
 ## Roadmap
 
