@@ -1,7 +1,5 @@
 # Oration [![Travis CI status](https://secure.travis-ci.org/ariofrio/oration.png)](http://travis-ci.org/ariofrio/oration) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/ariofrio/oration)
 
-TODO: Disable Windows-specific tests in Travis-CI.
-
 ## Installation
 
 ### Linux
