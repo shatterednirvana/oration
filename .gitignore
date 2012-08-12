@@ -1,2 +1,3 @@
 *.pyc
 /templates/azure/java/WorkerRole/jdk.zip
+/pkg
