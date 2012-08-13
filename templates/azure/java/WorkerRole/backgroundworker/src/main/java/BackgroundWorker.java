@@ -63,7 +63,7 @@ public class BackgroundWorker {
     info("Updating status of task " + id + ": started");
     JSONObject taskInfo = new JSONObject();
     taskInfo.put("id", id);
-    taskInfo.put("state", "started");
+    taskInfo.put("status", "started");
     taskInfo.put("start_time", df.format(new Date()));
     byte[] bytes = taskInfo.toJSONString().getBytes("UTF-8");
     taskContainer.getBlockBlobReference(id).upload(
@@ -84,7 +84,7 @@ public class BackgroundWorker {
     ByteArrayOutputStream taskInfoStream = new ByteArrayOutputStream();
     taskContainer.getBlockBlobReference(id).download(taskInfoStream);
     taskInfo = (JSONObject) JSONValue.parse(taskInfoStream.toString("UTF-8"));
-    taskInfo.put("state", "finished");
+    taskInfo.put("status", "finished");
     taskInfo.put("finish_time", df.format(new Date()));
     bytes = taskInfo.toJSONString().getBytes("UTF-8");
     taskContainer.getBlockBlobReference(id).upload(
