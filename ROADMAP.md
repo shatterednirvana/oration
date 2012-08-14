@@ -6,7 +6,7 @@
  - ✓ Azure: Clean up the Cicero frontend API.
  - ✓ Azure: More complete local testing and deployment instructions.
  - Azure: Add support for custom Java packages.
- - Azure: It works again.
+ - Azure: It works using local storage, after Chris confirmation.
  - Azure: Do logging in the code, not in the service definition.
  - ✓ Azure: Test suite for Python app.
  - Azure: Test suite for Java app.
