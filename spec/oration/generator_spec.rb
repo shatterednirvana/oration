@@ -42,7 +42,7 @@ shared_examples "Cicero API" do
   let(:host) { "http://localhost:#{port}" }
   it "responds to GET /" do RestClient::get "#{host}/" end
   it "responds to post, get status and get output of task" do
-    task = JSON.parse RestClient::post("#{host}/task?f=#{@generator.function}", nil)
+    task = JSON.parse RestClient::post("#{host}/task?f=#{@generator.function}", "")
     raise "starting a task failed" unless task["result"] == "success"
 
     loop do
@@ -53,7 +53,7 @@ shared_examples "Cicero API" do
         when "started" then sleep 2
         when "finished" then break
         else
-          raise "task status unknown: '#{status['status']}', in #{status}"
+          raise "task status unknown: '#{status['status']}', in #{status.inspect}"
         end
       else
         sleep 2
