@@ -15,10 +15,13 @@ end
 # Support
 
 require 'tmpdir'
-def get_test_data
-  target = Dir.mktmpdir "oration-test-"
-  Dir['spec/data/*'].each do |subdir|
-    FileUtils.cp_r subdir, target
+RSpec.configure do |c|
+  c.before(:each, :data => true) do
+    @data = Dir.mktmpdir "oration-test-"
+    Dir['spec/data/*'].each do |subdir|
+      FileUtils.cp_r subdir, @data
+    end
   end
-  target
+  c.after(:each, :data => true) { FileUtils.rm_r @data }
 end
+
