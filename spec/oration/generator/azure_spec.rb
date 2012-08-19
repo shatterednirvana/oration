@@ -16,7 +16,9 @@ shared_context "start and stop Java app" do |name, path, class_name|
   let(:port) { "8000" }
   before(:each) do
     Dir.chdir File.join(@generator.output_directory, path) do
-      throw "could not package Java app #{name.to_s}" if not system "mvn package"
+      if not system "mvn package"
+        throw "could not package Java app #{name.to_s}" 
+      end
       ENV['PORT'] = port
       if Config::CONFIG['host_os'] =~ /mswin/
         instance_variable_set "@#{name}", IO.popen('java -cp target\\classes;"target\\dependency\\*" ' + class_name)

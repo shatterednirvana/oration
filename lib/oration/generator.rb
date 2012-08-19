@@ -6,7 +6,7 @@ module Oration
     # A hash from supported clouds to lists of supported languages.
     def self.supported_clouds
       { :azure => ['py', 'java'],
-        :appengine => ['py', 'go'] }
+        :appengine => ['py', 'java', 'go'] }
     end
 
     attr_reader :file, :function, :cloud, :application_name_salt
