@@ -27,7 +27,7 @@ EOF
 
     def run!
       parse_options
-      if config.options[:version]
+      if config[:version]
         require 'oration/version'
         puts "Oration version #{VERSION}"
         exit
