@@ -8,25 +8,25 @@
     <servlet>
         <servlet-name>TaskServlet</servlet-name>
         <servlet-class>
-            edu.ucsb.cs.appscale.oration.app.TaskServlet
+            TaskServlet
         </servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DataServlet</servlet-name>
         <servlet-class>
-            edu.ucsb.cs.appscale.oration.app.DataServlet
+            DataServlet
         </servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ComputeServlet</servlet-name>
         <servlet-class>
-            edu.ucsb.cs.appscale.oration.app.ComputeServlet
+            ComputeServlet
         </servlet-class>
     </servlet>
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
         <servlet-class>
-            edu.ucsb.cs.appscale.oration.app.IndexServlet
+            IndexServlet
         </servlet-class>
     </servlet>
 

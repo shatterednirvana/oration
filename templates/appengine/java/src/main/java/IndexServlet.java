@@ -1,5 +1,3 @@
-package edu.ucsb.cs.appscale.oration.app;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;

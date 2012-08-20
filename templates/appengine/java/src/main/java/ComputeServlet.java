@@ -1,5 +1,3 @@
-package edu.ucsb.cs.appscale.oration.app;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +29,7 @@ public class ComputeServlet extends HttpServlet {
 	private static final DatastoreService datastore =
     DatastoreServiceFactory.getDatastoreService();
   private static final Logger log =
-    Logger.getLogger(DataServlet.class.getName());
+    Logger.getLogger(ComputeServlet.class.getName());
   private static final DateFormat df =
     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
@@ -57,7 +55,7 @@ public class ComputeServlet extends HttpServlet {
     log.info("Putting output data into location " + outputLocation);
     Entity model = new Entity("Data", outputLocation);
     model.setProperty("location", outputLocation);
-    model.setProperty("content", new Text(req.getParameter("content")));
+    model.setProperty("content", new Text(content));
     datastore.put(model);
 
     log.info("Updating status of task " + id + ": finished");

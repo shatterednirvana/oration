@@ -1,5 +1,3 @@
-package edu.ucsb.cs.appscale.oration.app;
-
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
 
 import java.io.IOException;
