@@ -69,6 +69,13 @@ module Oration
         else
           File.join(output_directory, 'WorkerRole', 'backgroundworker')
         end
+      when 'appengine'
+        case language
+        when 'java'
+          File.join(output_directory, 'src/main/java')
+        else
+          output_directory
+        end
       else
         output_directory
       end

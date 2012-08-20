@@ -37,7 +37,7 @@ module Oration
             if not system "mvn gae:unpack"
               throw "could not download Java AppEngine SDK"
             end
-            @app = IO.popen("mvn gae:run")
+            @app = IO.popen("mvn gae:run 1>&2")
           end
           sleep 20
         end

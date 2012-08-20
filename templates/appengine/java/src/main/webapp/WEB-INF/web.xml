@@ -6,15 +6,45 @@
     version="2.5">
 
     <servlet>
+        <servlet-name>TaskServlet</servlet-name>
+        <servlet-class>
+            edu.ucsb.cs.appscale.oration.app.TaskServlet
+        </servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DataServlet</servlet-name>
+        <servlet-class>
+            edu.ucsb.cs.appscale.oration.app.DataServlet
+        </servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComputeServlet</servlet-name>
+        <servlet-class>
+            edu.ucsb.cs.appscale.oration.app.ComputeServlet
+        </servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>IndexServlet</servlet-name>
         <servlet-class>
-            edu.ucsb.cs.appscale.oration.app.web.IndexServlet
+            edu.ucsb.cs.appscale.oration.app.IndexServlet
         </servlet-class>
     </servlet>
 
     <servlet-mapping>
+        <servlet-name>TaskServlet</servlet-name>
+        <url-pattern>/task</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DataServlet</servlet-name>
+        <url-pattern>/data</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComputeServlet</servlet-name>
+        <url-pattern>/compute</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
-        <url-pattern>/index</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
