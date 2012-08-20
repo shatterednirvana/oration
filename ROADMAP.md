@@ -9,15 +9,15 @@
  - Azure: It works using local storage, after Chris confirmation.
  - Azure: Do logging in the code, not in the service definition.
  - ✓ Azure: Test suite for Python app.
- - Azure: Test suite for Java app.
- - Azure: Test suite for Python harness.
- - Azure: Test suite for Java harness.
+ - ✓ Azure: Test suite for Java app.
+ - ✓ Azure: Test suite for Python harness.
+ - ✓ Azure: Test suite for Java harness.
 
 **Version 0.5:** The AppEngine release
- - AppEngine: Clean up the Cicero frontend API.
- - AppEngine: Support for Java.
+ - ✓ AppEngine: Clean up the Cicero frontend API.
+ - ✓ AppEngine: Support for Java.
  - AppEngine: Add a README.md with instructions (or a link).
- - AppEngine: Test suite for apps.
+ - ✓ AppEngine: Test suite for apps.
  - Both: Document the Cicero frontend API in oration/README.md.
 
 **Version 1.0**
