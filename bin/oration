@@ -1,1 +1,14 @@
-oration.rb
+#!/usr/bin/env ruby
+
+# return a nicer message from ctrl-c
+trap("INT") do
+  puts("\n !    Command cancelled.")
+  exit
+end
+
+$:.unshift File.join(File.dirname(__FILE__), "..", "lib")
+
+# start up the CLI
+require "oration/cli"
+cli = Oration::CLI.new
+cli.run!
